@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Information</title>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
     </head>
     
     <% 
@@ -90,6 +91,6 @@
             
            
         </table>
-        
+            <a href="index.jsp"> Back to Salary Calculator </a>
     </body>
 </html>
