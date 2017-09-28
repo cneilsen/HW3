@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
     </head>
     <body>
-        <h1>Salary Calculator</h1>
+        <h1>Salary Calculator<hr></h1>
         
         <form name="form1" action="results.jsp" method="post">
             <table border="2">
