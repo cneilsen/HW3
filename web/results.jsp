@@ -16,16 +16,38 @@
     <% 
        Double TotalHoursWorked = Double.parseDouble (request.getParameter("Hours Worked")); 
        Double HourlyRate = Double.parseDouble (request.getParameter("Hourly Rate"));
-       Double NumberHoursOvertime = Double.parseDouble (request.getParameter("Hourly Rate"));
-       Double OvertimeHourlyRate = (HourlyRate * 1.5);
-       Double GrossPay = Double.parseDouble (request.getParameter("Hourly Rate"));
+       Double NumberHoursOvertime = 0.0;
+       Double OvertimeHourlyRate = 0.0;
+       Double GrossPay;
        Double PretaxDeduct = Double.parseDouble (request.getParameter("Pre-tax Deduct"));
-       Double PretaxPay = Double.parseDouble (request.getParameter("Hourly Rate"));
-       Double TaxAmount = Double.parseDouble (request.getParameter("Hourly Rate"));
-       Double PosttaxPay = Double.parseDouble ( request.getParameter("Hourly Rate"));
+       Double PretaxPay;
+       Double TaxAmount;
+       Double PosttaxPay;
        Double PosttaxDeduct = Double.parseDouble (request.getParameter("Post-tax Deduct"));
-       Double NetPay = Double.parseDouble (request.getParameter("Hourly Rate"));
+       Double NetPay;
+       Double OvertimePay;
+       Double RegularPay;
+
+       if(TotalHoursWorked>40){
+           NumberHoursOvertime = TotalHoursWorked - 40; 
+           OvertimeHourlyRate = HourlyRate * 1.5;
+           OvertimePay = NumberHoursOvertime*OvertimeHourlyRate;
+           RegularPay = 40 * HourlyRate;
+           GrossPay = OvertimePay + RegularPay;
+       }
        
+       else 
+        GrossPay = TotalHoursWorked * HourlyRate;
+       PretaxPay = GrossPay - PretaxDeduct;
+       
+       if(GrossPay < 500){
+           TaxAmount = PretaxPay * .18;
+       }
+       else 
+       TaxAmount = PretaxPay * .22;
+       
+       PosttaxPay = PretaxPay - TaxAmount;
+       NetPay = PosttaxPay - PosttaxDeduct;
         %>
     
     <body>
@@ -44,8 +66,8 @@
             </tr>
             
             <tr>
-                <td># Hours Overtime:</td>
-                <td></td>
+                <td>Number of Hours Overtime:</td>
+                <td><%= NumberHoursOvertime %></td>
             </tr>
             
             <tr>
@@ -55,7 +77,7 @@
             
              <tr>
                 <td>Gross Pay:</td>
-                <td></td>
+                <td><%= GrossPay %></td>
             </tr>
             
              <tr>
@@ -65,17 +87,17 @@
             
              <tr>
                 <td>Pre-tax Pay:</td>
-                <td></td>
+                <td><%= PretaxPay %></td>
             </tr>
             
              <tr>
                 <td>Tax Amount:</td>
-                <td></td>
+                <td><%= TaxAmount %></td> 
             </tr>
             
              <tr>
                 <td>Post-tax Pay:</td>
-                <td></td>
+                <td><%= PosttaxPay %></td>
             </tr>
             
              <tr>
@@ -85,7 +107,7 @@
             
              <tr>
                 <td>Net Pay:</td>
-                <td></td>
+                <td><%= NetPay%></td>
             </tr>
             </tbody>
             
